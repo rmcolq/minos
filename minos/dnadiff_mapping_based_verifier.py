@@ -377,8 +377,11 @@ class DnadiffMappingBasedVerifier:
         pyfastaq.tasks.file_to_dict(dnadiff_plus_flanks_file, dnadiff_file_seqs)
         samfile_handle = pysam.AlignmentFile(samfile, "r")
         sam_previous_record_name = None
+        num_records = 0
         for sam_record in samfile_handle.fetch(until_eof=True):
+            num_records += 1
             if sam_record.query_name == sam_previous_record_name:
+                logging.debug(f'SAM record {sam_record.query_name} matches {sam_previous_record_name} so skip')
                 continue
             sam_previous_record_name = sam_record.query_name
             found_conf = False
@@ -440,6 +443,7 @@ class DnadiffMappingBasedVerifier:
         assert len(found) == len(allele)
         assert len(found) == len(match_flag)
         assert len(found) == len(correct_allele)
+        logging.debug(f'Found a total of {num_records} SAM records')
         return found, gt_conf, allele, match_flag, correct_allele
 
     @classmethod

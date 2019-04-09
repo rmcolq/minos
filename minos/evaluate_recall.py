@@ -59,7 +59,7 @@ class EvaluateRecall:
                     fields = line.rstrip().split('\t')
                     if fields[0] not in regions:
                         regions[fields[0]] = []
-                    start = int(fields[1]) - 1
+                    start = int(fields[1])
                     end = int(fields[2]) - 1
                     regions[fields[0]].append(pyfastaq.intervals.Interval(start, end))
 

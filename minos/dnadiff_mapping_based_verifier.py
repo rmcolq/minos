@@ -396,6 +396,8 @@ class DnadiffMappingBasedVerifier:
                 found.append('Exclude')
                 gt_conf.append(0)
                 allele.append('0')
+                match_flag.append('Exclude')
+                correct_allele.append('0')
                 continue
 
             match = DnadiffMappingBasedVerifier._check_if_sam_match_is_good(sam_record,
@@ -433,6 +435,7 @@ class DnadiffMappingBasedVerifier:
                 correct_allele.append('0')
             if not found_conf:
                 gt_conf.append(0)
+        logging.debug(f'Length of found: {len(found)}, Length of gt_conf: {len(gt_conf)}, Length of allele: {len(allele)}, Length of match_flag: {len(match_flag)}, Length of correct_allele: {len(correct_allele)}')
         assert len(found) == len(gt_conf)
         assert len(found) == len(allele)
         assert len(found) == len(match_flag)

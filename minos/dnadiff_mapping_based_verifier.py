@@ -99,31 +99,34 @@ class DnadiffMappingBasedVerifier:
 
         for line in snps.itertuples():
             assert(len(line) > 4)
-            seq_name = str(line[0]) + "." + str(line[1])
-            flanked_seq = ""
+            seq_name1 = str(line[0]) + "." + str(line[1])
+            flanked_seq1 = ""
             if line[2] == '.':
                 start = max(0,line[1] - flank_length)
                 end = min(line[1] + flank_length, len(seq1))
-                flanked_seq = seq1[start:end]
+                flanked_seq1 = seq1[start:end]
             else:
                 start = max(0, line[1] - flank_length - 1)
                 end = min(line[1] + flank_length, len(seq1))
-                flanked_seq = seq1[start:end]
+                flanked_seq1 = seq1[start:end]
             logging.debug(f'ref start:end:length {start}:{end}:{len(seq1)}')
             assert (end > start)
-            print('>' + seq_name, flanked_seq, sep='\n', file=out_handle1)
-            seq_name = str(line[0]) + "." + str(line[4])
+
+            seq_name2 = str(line[0]) + "." + str(line[4])
             if line[3] == '.':
                 start = max(0, line[4] - flank_length)
                 end = min(line[4] + flank_length, len(seq2))
-                flanked_seq = seq2[start:end]
+                flanked_seq2 = seq2[start:end]
             else:
                 start = max(0, line[4] - flank_length - 1)
                 end = min(line[4] + flank_length, len(seq2))
-                flanked_seq = seq2[start:end]
+                flanked_seq2 = seq2[start:end]
             logging.debug(f'query start:end:length {start}:{end}:{len(seq2)}')
             assert (end > start)
-            print('>' + seq_name, flanked_seq, sep='\n', file=out_handle2)
+
+            if flanked_seq1 != "" and flanked_seq2 != "":
+                print('>' + seq_name1, flanked_seq1, sep='\n', file=out_handle1)
+                print('>' + seq_name2, flanked_seq2, sep='\n', file=out_handle2)
 
         out_handle1.close()
         out_handle2.close()

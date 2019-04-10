@@ -83,12 +83,14 @@ class DnadiffMappingBasedVerifier:
             for record in SeqIO.parse(in_handle1, "fasta"):
                 seq1 = str(record.seq)
                 break
+        logging.debug(f'Length of ref sequence: {len(seq1)}')
 
         seq2 = ""
         with open(query_infile, "r") as in_handle2:
             for record in SeqIO.parse(in_handle2, "fasta"):
                 seq2 = str(record.seq)
                 break
+        logging.debug(f'Length of query sequence: {len(seq2)}')
 
         out_handle1 = open(ref_outfile, "w")
         out_handle2 = open(query_outfile, "w")
@@ -107,7 +109,10 @@ class DnadiffMappingBasedVerifier:
                 start = max(0, line[1] - flank_length - 1)
                 end = min(line[1] + flank_length, len(seq1))
                 flanked_seq = seq1[start:end]
+            logging.debug(f'ref start:end:length {start}:{end}:{len(seq1)}')
+            assert (end > start)
             print('>' + seq_name, flanked_seq, sep='\n', file=out_handle1)
+            seq_name = str(line[0]) + "." + str(line[4])
             if line[3] == '.':
                 start = max(0, line[4] - flank_length)
                 end = min(line[4] + flank_length, len(seq2))
@@ -116,6 +121,8 @@ class DnadiffMappingBasedVerifier:
                 start = max(0, line[4] - flank_length - 1)
                 end = min(line[4] + flank_length, len(seq2))
                 flanked_seq = seq2[start:end]
+            logging.debug(f'query start:end:length {start}:{end}:{len(seq2)}')
+            assert (end > start)
             print('>' + seq_name, flanked_seq, sep='\n', file=out_handle2)
 
         out_handle1.close()

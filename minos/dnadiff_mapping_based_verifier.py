@@ -448,6 +448,19 @@ class DnadiffMappingBasedVerifier:
                 correct_allele.append('0')
             if not found_conf:
                 gt_conf.append(0)
+
+        if len(found) == 0:
+            assert len(found) == len(gt_conf)
+            assert len(found) == len(allele)
+            assert len(found) == len(match_flag)
+            assert len(found) == len(correct_allele)
+            for k in dnadiff_file_seqs:
+                found.append('0')
+                gt_conf.append(0)
+                allele.append('0')
+                match_flag.append("Empty_SNPs_file")
+                correct_allele.append('0')
+
         logging.debug(f'Length of found: {len(found)}, Length of gt_conf: {len(gt_conf)}, Length of allele: {len(allele)}, Length of match_flag: {len(match_flag)}, Length of correct_allele: {len(correct_allele)}')
         assert len(found) == len(gt_conf)
         assert len(found) == len(allele)

@@ -73,6 +73,12 @@ class TestDnadiffMappingBasedVerifier(unittest.TestCase):
         dnadiff_mapping_based_verifier.DnadiffMappingBasedVerifier._index_vcf(vcffile)
         found, gt_conf, allele, match_flag, allele_flag = dnadiff_mapping_based_verifier.DnadiffMappingBasedVerifier._parse_sam_file_and_vcf(samfile, vcffile + ".gz", reffile, flank, allow_mismatches)
 
+        exp_found = ['0', '0', '0', '0', '0', '0', '0']  # nb doesn't currently handle '.' alleles
+        exp_gt_conf = [0, 0, 0, 0, 0, 0, 0]
+        exp_allele = ['0', '0', '0', '0', '0', '0', '0']
+        self.assertEqual(exp_found, found)
+        self.assertEqual(exp_gt_conf, gt_conf)
+        self.assertEqual(exp_allele, allele)
         os.unlink(vcffile + ".gz")
         os.unlink(vcffile + ".gz.tbi")
 

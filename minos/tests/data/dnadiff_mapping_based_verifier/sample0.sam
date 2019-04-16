@@ -1,0 +1,9 @@
+@SQ	SN:ref1.107.0.0.0	LN:11
+@SQ	SN:ref1.107.0.0.1	LN:11
+@SQ	SN:ref1.167.0.1.0	LN:11
+@SQ	SN:ref1.167.0.1.1	LN:11
+@SQ	SN:ref2.70.0.0.0	LN:11
+@SQ	SN:ref2.70.0.0.1	LN:11
+@SQ	SN:ref2.92.0.1.0	LN:9
+@SQ	SN:ref2.92.0.1.1	LN:9
+@PG	ID:bwa	PN:bwa	VN:0.7.17-r1188 CL:/usr/local/bin/bwa samse vcf1.fa sam.tmp dnadiff1.fa

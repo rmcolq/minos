@@ -63,6 +63,19 @@ class TestDnadiffMappingBasedVerifier(unittest.TestCase):
         self.assertTrue(filecmp.cmp(expected_out, tmp_out, shallow=False))
         os.unlink(tmp_out)
 
+    def test_parse_sam_file_and_vcf_empty_sam(self):
+        samfile = os.path.join(data_dir, 'sample0.sam')
+        vcffile = os.path.join(data_dir, 'sample1a.vcf')
+        reffile = os.path.join(data_dir, 'sample1.plusflanks.fa')
+
+        flank = 5
+        allow_mismatches = False
+        dnadiff_mapping_based_verifier.DnadiffMappingBasedVerifier._index_vcf(vcffile)
+        found, gt_conf, allele, match_flag, allele_flag = dnadiff_mapping_based_verifier.DnadiffMappingBasedVerifier._parse_sam_file_and_vcf(samfile, vcffile + ".gz", reffile, flank, allow_mismatches)
+
+        os.unlink(vcffile + ".gz")
+        os.unlink(vcffile + ".gz.tbi")
+
     def test_parse_sam_file_and_vcf1(self):
         samfile = os.path.join(data_dir, 'sample1.sam')
         vcffile = os.path.join(data_dir, 'sample1a.vcf')

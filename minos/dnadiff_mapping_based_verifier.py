@@ -385,7 +385,7 @@ class DnadiffMappingBasedVerifier:
         allele = []
         dnadiff_file_seqs = {}
         pyfastaq.tasks.file_to_dict(dnadiff_plus_flanks_file, dnadiff_file_seqs)
-        samfile_handle = pysam.AlignmentFile(samfile, "r")
+        samfile_handle = pysam.AlignmentFile(samfile, "r", check_sq=False)
         sam_previous_record_name = None
         num_records = 0
         for sam_record in samfile_handle.fetch(until_eof=True):
